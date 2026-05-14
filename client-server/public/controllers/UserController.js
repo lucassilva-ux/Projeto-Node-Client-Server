@@ -29,76 +29,83 @@ class UserController {
     /**
      * Registra os eventos do painel de edição de usuários.
      */
-    onEdit(){
+   onEdit(){
 
-        document.querySelector("#box-user-update .btn-cancel").addEventListener("click", e => {
+    document.querySelector("#box-user-update .btn-cancel").addEventListener("click", e => {
 
-            this.showPanelCreate();
+        this.showPanelCreate();
 
-        });
+    });
 
-        this.formUpdateEl.addEventListener("submit", event => {
+    this.formUpdateEl.addEventListener("submit", event => {
+        event.preventDefault();
 
-            event.preventDefault();
+        let btn = this.formUpdateEl.querySelector("[type=submit]");
 
-            let btn = this.formUpdateEl.querySelector("[type=submit]")
+        btn.disabled = true;
 
-            btn.disabled = true;
+        let values = this.getValues(this.formUpdateEl);
 
-            let values = this.getValues(this.formUpdateEl);
+        if (!values) {
+            btn.disabled = false;
+            return false;
+        }
 
-            if (!values) {
-                btn.disabled = false;
-                return false;
+        let index = this.formUpdateEl.dataset.trIndex;
+
+        let tr = this.tableEl.rows[index];
+
+        let userOld = JSON.parse(tr.dataset.user);
+
+        let result = Object.assign({}, userOld, values);
+
+        result._id = userOld._id;
+        result._register = userOld._register;
+
+        let photoInput = this.formUpdateEl.querySelector("[name=photo]");
+
+        this.getPhoto(this.formUpdateEl).then(content => {
+            if (photoInput && photoInput.files.length > 0) {
+                result._photo = content;
+
+            } else {
+                result._photo = userOld._photo || User.DEFAULT_PHOTO;
+
             }
 
-            let index = this.formUpdateEl.dataset.trIndex;
+            let user = new User();
 
-            let tr = this.tableEl.rows[index];
+            user.loadFromJSON(result);
 
-            let userOld = JSON.parse(tr.dataset.user);
+            user.save().then(user => {
 
-            let result = Object.assign({}, userOld, values);
+                this.getTr(user, tr);
 
-            result._id = userOld._id;
-            result._register = userOld._register;
+                this.updateCount();
 
-            this.getPhoto(this.formUpdateEl).then(
-                (content) => {
+                this.formUpdateEl.reset();
 
-                    if (!values.photo){ 
-                        result._photo = userOld._photo;
-                    } else {
-                        result._photo = content;
-                    }
+                this.showPanelCreate();
 
-                    let user = new User();
+                btn.disabled = false;
 
-                    user.loadFromJSON(result);
+            }).catch(e => {
 
-                    user.save().then(user=>{
-                    this.getTr(user, tr);
+                console.error(e);
+                btn.disabled = false;
 
-                    this.updateCount();
+            });
 
-                    this.formUpdateEl.reset();
-            
-                    this.showPanelCreate();
+        }).catch(e => {
 
-                    });
-
-                    btn.disabled = false;
-
-                }, 
-                (e) => {
-                    console.error(e);
-                    btn.disabled = false;
-                }
-            );
+            console.error(e);
+            btn.disabled = false;
 
         });
 
-    }
+    });
+
+}
 
     /**
  * Limpa completamente o campo de foto do formulário.
