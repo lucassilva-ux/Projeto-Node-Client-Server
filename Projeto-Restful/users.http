@@ -15,9 +15,9 @@ Content-Type: application/json
 }
 
 ### Buscar usuário por ID
-GET http://127.0.0.1:4000/users/ieyGR8uUXolpB6pe
+GET http://127.0.0.1:4000/users/dEfw2jJdfudc74Wp
 ### Atualizar usuário por ID
-PUT http://127.0.0.1:4000/users/ieyGR8uUXolpB6pe
+PUT http://127.0.0.1:4000/users/dEfw2jJdfudc74Wp
 Content-Type: application/json
 
 {

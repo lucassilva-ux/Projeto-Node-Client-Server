@@ -1,0 +1,642 @@
+/*
+ * Saipos Users Frontend
+ * -----------------------------------------------------------------------------
+ * Camada visual da tela de gerenciamento de usuarios.
+ *
+ * Governanca de manutencao:
+ * - Este arquivo concentra todo o CSS do layout Saipos.
+ * - O HTML deve manter os IDs usados pelo JavaScript legado:
+ *   form-user-create, form-user-update, table-users, number-users,
+ *   number-users-admin, box-user-create e box-user-update.
+ * - Evite alterar esses IDs sem ajustar controllers/UserController.js.
+ * - Classes foram organizadas por blocos: base, header, hero, forms, table,
+ *   buttons, helpers e responsividade.
+ */
+
+:root {
+  --color-mirtilo-950: #11092f;
+  --color-mirtilo-900: #170841;
+  --color-mirtilo-850: #1d0b4f;
+  --color-mirtilo-800: #24125f;
+  --color-mirtilo-700: #2f1b70;
+  --color-lavanda: #706bff;
+  --color-lavanda-strong: #5148f5;
+  --color-white: #ffffff;
+  --color-soft-white: #f7f5ff;
+  --color-muted: #8d85aa;
+  --color-border: #d7d1e8;
+  --color-danger: #ef4444;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 22px;
+  --shadow-panel: 0 30px 80px rgba(0, 0, 0, .28);
+  --shadow-soft: 0 22px 55px rgba(0, 0, 0, .18);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 25% 25%, rgba(112, 107, 255, .22), transparent 28%),
+    linear-gradient(135deg, #111238 0%, var(--color-mirtilo-850) 45%, var(--color-mirtilo-900) 100%);
+  color: var(--color-white);
+  font-family: 'Poppins', Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Header ------------------------------------------------------------------- */
+
+.header {
+  width: 100%;
+  height: 82px;
+  background: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 115px;
+}
+
+.logo-link {
+  color: #2f6df6;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.logo-link:hover,
+.logo-link:focus {
+  color: #2f6df6;
+  text-decoration: none;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.login {
+  color: var(--color-mirtilo-850);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login:hover,
+.login:focus {
+  color: var(--color-mirtilo-850);
+  text-decoration: none;
+}
+
+.user-icon {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #bab3dc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-mirtilo-850);
+  font-size: 14px;
+}
+
+/* Hero e layout principal --------------------------------------------------- */
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 55px 0 32px;
+  display: grid;
+  grid-template-columns: 1fr 570px;
+  gap: 70px;
+  align-items: center;
+}
+
+.left {
+  position: relative;
+}
+
+.badge {
+  display: inline-block;
+  margin-bottom: 28px;
+  padding: 9px 19px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, .14);
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.money {
+  position: absolute;
+  right: 20px;
+  top: -35px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-white);
+  color: var(--color-mirtilo-850);
+  font-size: 22px;
+  font-weight: 800;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, .18);
+}
+
+.money.small {
+  right: -12px;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  opacity: .6;
+}
+
+.left h1 {
+  max-width: 540px;
+  margin-bottom: 28px;
+  color: var(--color-white);
+  font-size: 70px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -3px;
+}
+
+.left h1 span {
+  color: var(--color-lavanda);
+}
+
+.left p {
+  max-width: 470px;
+  margin-bottom: 44px;
+  color: #f4f2ff;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.stats {
+  display: flex;
+  gap: 24px;
+}
+
+.stat-card {
+  width: 215px;
+  height: 120px;
+  padding: 26px 22px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, .09);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+}
+
+.stat-card h3 {
+  margin-bottom: 14px;
+  color: var(--color-white);
+  font-size: 42px;
+  line-height: 1;
+}
+
+.stat-card p {
+  margin: 0;
+  color: var(--color-white);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* Paineis e formularios ----------------------------------------------------- */
+
+.panel {
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  color: var(--color-mirtilo-850);
+  box-shadow: var(--shadow-panel);
+}
+
+.form-panel {
+  padding: 30px 32px 28px;
+}
+
+.panel-title {
+  margin-bottom: 8px;
+  color: var(--color-mirtilo-850);
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.panel-subtitle {
+  margin-bottom: 26px;
+  color: var(--color-muted);
+  text-align: center;
+  font-size: 14px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--color-mirtilo-850);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  height: 42px;
+  padding: 0 15px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  background: var(--color-white);
+  color: var(--color-mirtilo-850);
+  font-size: 14px;
+}
+
+.form-group input::placeholder {
+  color: #8d88a4;
+}
+
+.form-group.has-error input,
+.form-group.has-error select {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, .12);
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding-top: 2px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--color-mirtilo-850);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.radio-group input {
+  width: 13px;
+  height: 13px;
+}
+
+.checkbox-group {
+  margin: 8px 0 22px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-mirtilo-850);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.checkbox-label input {
+  width: 14px;
+  height: 14px;
+}
+
+.photo-preview {
+  display: block;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 10px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ebe7fb;
+}
+
+/* Botoes ------------------------------------------------------------------- */
+
+.btn,
+.submit-btn {
+  border: 0;
+  border-radius: var(--radius-sm);
+  font-weight: 800;
+  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 44px;
+  background: linear-gradient(90deg, var(--color-lavanda-strong), #5b4bd7);
+  color: var(--color-white);
+  font-size: 14px;
+  box-shadow: 0 12px 28px rgba(79, 70, 255, .38);
+}
+
+.submit-btn:hover,
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.submit-btn:disabled,
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: .65;
+}
+
+.btn-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.btn-primary,
+.btn-edit {
+  background: var(--color-lavanda-strong);
+  color: var(--color-white);
+}
+
+.btn-danger,
+.btn-delete {
+  background: var(--color-danger);
+  color: var(--color-white);
+}
+
+.btn-default,
+.btn-cancel {
+  background: #ebe7fb;
+  color: var(--color-mirtilo-850);
+}
+
+.btn-xs,
+.btn-flat {
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+/* Tabela de usuarios -------------------------------------------------------- */
+
+.users-section {
+  max-width: 1240px;
+  margin: 0 auto 45px;
+  padding: 26px 28px 34px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, .08);
+  box-shadow: var(--shadow-soft);
+}
+
+.users-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.users-header h2 {
+  color: var(--color-white);
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.search-box {
+  width: 310px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, .07);
+  color: #bdb7de;
+}
+
+.search-box input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-white);
+  font-size: 13px;
+}
+
+.search-box input::placeholder {
+  color: #bdb7de;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--color-white);
+}
+
+.users-table thead {
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+
+.users-table th,
+.users-table td {
+  padding: 15px 18px;
+  text-align: left;
+  font-size: 13px;
+}
+
+.users-table th {
+  font-weight: 800;
+}
+
+.users-table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+.users-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.img-circle,
+.img-sm {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+/* Utilitarios --------------------------------------------------------------- */
+
+.is-hidden {
+  display: none !important;
+}
+
+/* Responsividade ----------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .header {
+    padding: 0 35px;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    padding: 45px 28px 32px;
+  }
+
+  .left {
+    text-align: center;
+  }
+
+  .left h1,
+  .left p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .stats {
+    justify-content: center;
+  }
+
+  .form-panel {
+    width: 100%;
+    max-width: 570px;
+    margin: 0 auto;
+  }
+
+  .users-section {
+    margin-left: 28px;
+    margin-right: 28px;
+  }
+}
+
+@media (max-width: 700px) {
+  .header {
+    height: 70px;
+    padding: 0 22px;
+  }
+
+  .login,
+  .user-icon {
+    display: none;
+  }
+
+  .left h1 {
+    font-size: 46px;
+  }
+
+  .left p {
+    font-size: 16px;
+  }
+
+  .stats {
+    flex-direction: column;
+  }
+
+  .stat-card {
+    width: 100%;
+  }
+
+  .form-panel {
+    padding: 26px 22px;
+  }
+
+  .users-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .users-section {
+    overflow-x: auto;
+    padding: 22px;
+  }
+
+  .users-table {
+    min-width: 760px;
+  }
+}
+
+.upload-box {
+    width: 100%;
+    min-height: 52px;
+
+    border: 1px solid #d7d1e8;
+    border-radius: 12px;
+
+    padding: 8px 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    background: #fff;
+
+    overflow: hidden;
+}
+
+.upload-box input[type="file"] {
+    display: none;
+}
+
+.upload-button {
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 16px;
+
+    background: #5148f5;
+    color: #fff;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    flex-shrink: 0;
+
+    cursor: pointer;
+}
+
+.upload-text {
+    font-size: 13px;
+    color: #1d0b4f;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
