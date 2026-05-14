@@ -1,0 +1,19 @@
+{
+  "name": "restful",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Saipos - Trilha",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "@seald-io/nedb": "^4.1.2",
+    "body-parser": "^2.2.2",
+    "consign": "^0.1.6",
+    "express": "^5.2.1"
+  }
+}

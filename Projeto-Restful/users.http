@@ -1,0 +1,30 @@
+### Status da API
+GET http://127.0.0.1:4000/
+
+### Listar usuários
+GET http://127.0.0.1:4000/users
+
+### Criar usuário
+POST http://127.0.0.1:4000/users
+Content-Type: application/json
+
+{
+  "_name": "Lucas",
+  "_email": "lucas.escouto@saipos.com",
+  "_password": "teste.teste7777"
+}
+
+### Buscar usuário por ID
+GET http://127.0.0.1:4000/users/ieyGR8uUXolpB6pe
+### Atualizar usuário por ID
+PUT http://127.0.0.1:4000/users/ieyGR8uUXolpB6pe
+Content-Type: application/json
+
+{
+  "_name": "Lucas Atualizado",
+  "_email": "lucas.escouto@saipos.com",
+  "_password": "alteração.teste"
+}
+
+### Remover usuário por ID
+DELETE http://127.0.0.1:4000/users/IsmsWSQj3v3coa1g
