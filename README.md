@@ -8,6 +8,15 @@ Aplicação desenvolvida com **Node.js** utilizando arquitetura **Client-Server*
 
 ---
 
+## Demonstração
+
+<p align="center">
+  <img src="Projeto-Restful/assets/testegerenciamento.gif" alt="Demonstração de requisições na API." width="600">
+</p>
+
+---
+
+
 # Sobre o projeto
 
 Este projeto foi desenvolvido para praticar conceitos de:

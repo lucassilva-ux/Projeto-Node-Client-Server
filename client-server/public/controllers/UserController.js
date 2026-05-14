@@ -101,6 +101,50 @@ class UserController {
     }
 
     /**
+ * Limpa completamente o campo de foto do formulário.
+ *
+ * Remove:
+ * - o arquivo selecionado anteriormente;
+ * - o preview da imagem;
+ * - o texto visual do nome do arquivo.
+ *
+ * @param {HTMLFormElement} formEl Formulário que terá o campo resetado.
+ */
+    clearPhotoField(formEl) {
+
+        let photoInput = formEl.querySelector("[name=photo]");
+
+        if (photoInput) {
+            photoInput.value = "";
+        }
+
+        let photoPreview = formEl.querySelector(".photo");
+
+        if (photoPreview) {
+            photoPreview.src = User.DEFAULT_PHOTO;
+        }
+
+        let fileTextElements = formEl.querySelectorAll(
+            ".file-name, .photo-file, .filename, .custom-file-label, span, small, p"
+        );
+
+        fileTextElements.forEach(el => {
+            let text = el.innerText || "";
+
+            if (
+                text.includes(".png") ||
+                text.includes(".jpg") ||
+                text.includes(".jpeg") ||
+                text.includes(".webp")
+            ) {
+                el.innerText = "Nenhuma foto selecionada";
+            }
+        });
+
+    }
+
+
+    /**
      * Registra o envio do formulário de criação de usuários.
      */
     onSubmit(){
@@ -110,7 +154,6 @@ class UserController {
             event.preventDefault();
 
             let btn = this.formEl.querySelector("[type=submit]");
-
             btn.disabled = true;
 
             let values = this.getValues(this.formEl);
@@ -120,29 +163,33 @@ class UserController {
                 return false;
             }
 
-            this.getPhoto(this.formEl).then(
-                (content) => {
+            this.getPhoto(this.formEl).then(content => {
 
-                    values.photo = content;
+                values.photo = content || User.DEFAULT_PHOTO;
 
-                    values.save().then(user=>{
+                values.save().then(user => {
+
                     this.addLine(user);
 
                     this.formEl.reset();
+                    this.clearPhotoField(this.formEl);
 
                     btn.disabled = false;
-                    });
 
-                }, 
-                (e) => {
+                }).catch(e => {
                     console.error(e);
                     btn.disabled = false;
-                }
-            );
-        
+                });
+
+            }).catch(e => {
+                console.error(e);
+                btn.disabled = false;
+            });
+
         });
 
     }
+
 
     /**
      * Lê a foto selecionada no formulário e retorna seu conteúdo em Base64.
